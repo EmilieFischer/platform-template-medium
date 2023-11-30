@@ -1,9 +1,10 @@
 'use client'
 import { MdCheckCircle, MdPanoramaFishEye } from 'react-icons/md'
 import { FC, useState } from 'react'
-import { ListItem as ChakraListItem, ListIcon, Box } from '@chakra-ui/react'
+import { ListItem as ChakraListItem, ListIcon, Flex } from '@chakra-ui/react'
 import Link from 'next/link'
 import { Todo } from '@prisma/client'
+import { FaArrowRight } from 'react-icons/fa'
 
 type Props = {
   todo: Todo
@@ -27,12 +28,20 @@ const ListItem: FC<Props> = ({ todo }) => {
   }
 
   return (
-    <>
-      <ChakraListItem onClick={handleClick}>
-        <ListIcon as={icon} color={completed ? 'green.500' : 'gray.500'} />
-        <Link href={`/todo/${todo.id}`}>{todo.text}</Link>
+    <Flex alignItems='center'>
+      <ListIcon as={icon} color={completed ? 'green.500' : 'gray.500'} />
+      <ChakraListItem
+        onClick={handleClick}
+        cursor='pointer'
+        key={todo.id}
+        mr={5}
+      >
+        {todo.text}
       </ChakraListItem>
-    </>
+      <Link href={`/todo/${todo.id}`}>
+        <FaArrowRight />
+      </Link>
+    </Flex>
   )
 }
 
